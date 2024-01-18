@@ -106,6 +106,23 @@ function apiUpdateOperation(operationId, description, timeSpent) {
     )
 };
 
+function apiDeleteOperation(operationId) {
+    return fetch(
+        apihost + '/api/operations/' + operationId,
+        {
+            headers: { Authorization: apikey},
+            method: 'DELETE'
+        }
+    ).then(
+        function(resp) {
+            if(!resp.ok) {
+                alert('Wystąpił błąd! Otwórz devtools i zakładkę Sieć/Network i poszukaj przyczyny');
+            }
+            return resp.json();
+        }
+    )
+};
+
 function renderTask(taskId, title, description, status) {
     const section = document.createElement("section");
     section.className = 'card mt-5 shadow-sm';
@@ -235,18 +252,41 @@ function renderOperation(operationList, status, operationId, operationDescriptio
         controlDiv.appendChild(add15minButton);
 
         add15minButton.addEventListener('click', function() {
-
-        })
+            apiUpdateOperation(operationId, operationDescription, timeSpent + 15).then(
+                function(response) {
+                    time.innerText = formatTime(response.data.timeSpent);
+                    timeSpent = response.data.timeSpent;
+                }
+            );
+        });
 
         const add1hButton = document.createElement('button');
         add1hButton.className = 'btn btn-outline-success btn-sm mr-2';
         add1hButton.innerText = '+1hour';
         controlDiv.appendChild(add1hButton);
 
+        add1hButton.addEventListener('click', function() {
+            apiUpdateOperation(operationId, operationDescription, timeSpent + 60).then(
+                function(response) {
+                    time.innerText = formatTime(response.data.timeSpent);
+                    timeSpent = response.data.timeSpent;
+                }
+                
+            );
+        });
+
         const delButton = document.createElement('button');
         delButton.className = 'btn btn-outline-success btn-sm mr-2';
         delButton.innerText = 'Delete';
         controlDiv.appendChild(delButton); 
+
+        delButton.addEventListener('click', function() {
+            apiDeleteOperation(operationId).then(
+                function() {
+                    li.parentElement.removeChild(li);
+                }
+            );
+        });
     }
 };
 
