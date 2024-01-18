@@ -9,7 +9,7 @@ Before using the code, replace the placeholder values with your actual API key a
 
 ```javascript
 const apikey = 'YOUR_API_KEY';
-const apihost = 'https://todo-api.coderslab.pl';
+const apihost = 'your_host';
 
 Functions
 1. apiListTasks()
