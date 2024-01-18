@@ -70,6 +70,42 @@ function apiDeleteTask(taskId) {
     )
 };
 
+function apiCreateOperationForTask(taskId, description) {
+    return fetch(
+        apihost + '/api/tasks/' + taskId + '/operations',
+        {
+            headers: { Authorization: apikey, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ description: description, timeSpent: 0 }),
+            method: 'POST'
+        }
+    ).then(
+        function(resp) {
+            if(!resp.ok) {
+                alert('Wystąpił błąd! Otwórz devtools i zakładkę Sieć/Network i poszukaj przyczyny'); 
+            }
+            return resp.json();
+        }
+    )
+};
+
+function apiUpdateOperation(operationId, description, timeSpent) {
+    return fetch(
+        apihost + '/api/operations/' + operationId,
+        {
+            headers: { Authorization: apikey, 'Content-Type': 'application/json'},
+            body: JSON.stringify({ description: description, timeSpent: timeSpent }),
+            method: 'PUT'
+        }
+    ).then(
+        function(resp) {
+            if(!resp.ok) {
+                alert('Wystąpił błąd! Otwórz devtools i zakładkę Sieć/Network i poszukaj przyczyny');
+            }
+            return resp.json();
+        }
+    )
+};
+
 function renderTask(taskId, title, description, status) {
     const section = document.createElement("section");
     section.className = 'card mt-5 shadow-sm';
@@ -155,9 +191,22 @@ function renderTask(taskId, title, description, status) {
         addButton.className = 'btn btn-info';
         addButton.innerText = 'Add';
         inputGroupAppend.appendChild(addButton);
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            apiCreateOperationForTask(taskId, descriptionInput.value).then(
+                function(response) {
+                    renderOperation(
+                        ul,
+                        status,
+                        response.data.id,
+                        response.data.description,
+                        response.data.timeSpent
+                    );
+                }
+            )
+        });
     }
-
-
 };
 
 function renderOperation(operationList, status, operationId, operationDescription, timeSpent) {
@@ -184,6 +233,10 @@ function renderOperation(operationList, status, operationId, operationDescriptio
         add15minButton.className = 'btn btn-outline-success btn-sm mr-2';
         add15minButton.innerText = '+15min';
         controlDiv.appendChild(add15minButton);
+
+        add15minButton.addEventListener('click', function() {
+
+        })
 
         const add1hButton = document.createElement('button');
         add1hButton.className = 'btn btn-outline-success btn-sm mr-2';
