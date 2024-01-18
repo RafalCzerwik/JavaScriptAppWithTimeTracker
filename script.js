@@ -51,7 +51,24 @@ function apiCreateTask(title, description) {
             return resp.json();
         }
     )
-}
+};
+
+function apiDeleteTask(taskId) {
+    return fetch(
+        apihost + '/api/tasks/' + taskId,
+        {
+            headers: { Authorization: apikey },
+            method: 'DELETE'
+        }
+    ).then(
+        function(resp) {
+            if(!resp.ok) {
+                alert('Wystąpił błąd! Otwórz devtools i zakładkę Sieć/Network i poszukaj przyczyny');
+            }
+            return resp.json();
+        }
+    )
+};
 
 function renderTask(taskId, title, description, status) {
     const section = document.createElement("section");
@@ -89,6 +106,14 @@ function renderTask(taskId, title, description, status) {
     deleteButton.innerText = 'Delete';
     headerRightDiv.appendChild(deleteButton);
 
+    deleteButton.addEventListener('click', function() {
+        apiDeleteTask(taskId).then(
+            function() {
+                section.parentElement.removeChild(section);
+            }
+        );
+    });
+
     const ul = document.createElement('ul');
     ul.className = 'list-group list group-flush';
     section.appendChild(ul);
@@ -99,9 +124,9 @@ function renderTask(taskId, title, description, status) {
                 function(operation) {
                     renderOperation(ul, status, operation.id, operation.description, operation.timeSpent);
                 }
-            );
+            )
         }
-    );
+    )
 
     if(status === 'open') {
         const addOperationDiv = document.createElement('div');
