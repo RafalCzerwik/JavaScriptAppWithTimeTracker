@@ -1,8 +1,6 @@
 const apikey = '20ab0160-3b1f-4179-89a9-1684255870ef';
 const apihost = 'https://todo-api.coderslab.pl';
 
-// apikey = {"error":false,"data":{"apiKey":"20ab0160-3b1f-4179-89a9-1684255870ef"}}
-
 function apiListTasks() {
     return fetch(
         apihost + '/api/tasks',
@@ -37,7 +35,7 @@ function apiListOperationsForTask(taskId) {
 
 function apiCreateTask(title, description) {
     return fetch(
-        apihost + '/task/tasks',
+        apihost + '/api/tasks',
         {
             headers: { Authorization: apikey, 'Content-Type': 'application/json' },
             body: JSON.stringify({ title: title, description: description, status: 'open'}),
@@ -123,6 +121,24 @@ function apiDeleteOperation(operationId) {
     )
 };
 
+function apiUpdateTask(taskId, title, description, status) {
+    return fetch(
+        apihost + '/api/tasks/' + taskId,
+        {
+            headers: { Authorization: apikey, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ title: title, description: description, status: status}),
+            method: 'PUT'
+        }
+    ).then(
+        function(resp) {
+            if(!resp.ok) {
+                alert('Wystąpił błąd! Otwórz devtools i zakładkę Sieć/Network i poszukaj przyczyny');
+            }
+            return resp.json();
+        }
+    )
+};
+
 function renderTask(taskId, title, description, status) {
     const section = document.createElement("section");
     section.className = 'card mt-5 shadow-sm';
@@ -152,6 +168,15 @@ function renderTask(taskId, title, description, status) {
         finishButton.className = 'btn btn-dark btn-sm js-task-open-only';
         finishButton.innerText = 'Finish';
         headerRightDiv.appendChild(finishButton);
+
+        finishButton.addEventListener('click', function(){
+            apiUpdateTask(taskId, title, description, 'closed');
+            section.querySelectorAll('.js-task-open-only').forEach(
+                function(element) {
+                    element.parentElement.removeChild(element);
+                }
+            );
+        });
     }
 
     const deleteButton = document.createElement('button');
@@ -177,9 +202,9 @@ function renderTask(taskId, title, description, status) {
                 function(operation) {
                     renderOperation(ul, status, operation.id, operation.description, operation.timeSpent);
                 }
-            )
+            );
         }
-    )
+    );
 
     if(status === 'open') {
         const addOperationDiv = document.createElement('div');
