@@ -59,8 +59,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     );
 });
-
-
-Important Note
-Always handle errors appropriately by checking the response status and displaying error messages to the user.
-Feel free to modify the code based on your specific requirements and UI design.
