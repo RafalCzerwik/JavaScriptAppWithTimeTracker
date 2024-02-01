@@ -1,42 +1,42 @@
 # JavaScriptAppWithTimeTracker
- App with TimeTracker
+ #### App with TimeTracker
 
-# To-Do List API Integration
+## To-Do List API Integration
 
-## API Key and Host
+### API Key and Host
 
 Before using the code, replace the placeholder values with your actual API key and API host:
 
 ```javascript
 const apikey = 'YOUR_API_KEY';
 const apihost = 'your_host';
-
-Functions
-1. apiListTasks()
+```
+## Functions
+1. ### apiListTasks()
 Lists all tasks.
-2. apiListOperationsForTask(taskId)
+2. ### apiListOperationsForTask(taskId)
 Lists all operations for a specific task.
-3. apiCreateTask(title, description)
+3. ### apiCreateTask(title, description)
 Creates a new task.
-4. apiDeleteTask(taskId)
+4. ### apiDeleteTask(taskId)
 Deletes a task.
-5. apiCreateOperationForTask(taskId, description)
+5. ### apiCreateOperationForTask(taskId, description)
 Creates a new operation for a specific task.
-6. apiUpdateOperation(operationId, description, timeSpent)
+6. ### apiUpdateOperation(operationId, description, timeSpent)
 Updates an operation.
-7. apiDeleteOperation(operationId)
+7. ### apiDeleteOperation(operationId)
 Deletes an operation.
-8. apiUpdateTask(taskId, title, description, status)
+8. ### apiUpdateTask(taskId, title, description, status)
 Updates a task.
-9. renderTask(taskId, title, description, status)
+9. ### renderTask(taskId, title, description, status)
 Renders HTML representation of a task.
-10. renderOperation(operationList, status, operationId, operationDescription, timeSpent)
+10. ### renderOperation(operationList, status, operationId, operationDescription, timeSpent)
 Renders HTML representation of an operation.
-11. formatTime(timeSpent)
+11. ### formatTime(timeSpent)
 Formats time in minutes to hours and minutes.
 
 
-Usage
+## Usage
 1. Replace the placeholder values in the code with your API key and API host.
 2. Ensure your HTML file includes a main container for rendering tasks:
 
@@ -47,7 +47,7 @@ Usage
 
 3. Add the necessary buttons and forms in your HTML to trigger the API functions.
 4. Initialize the tasks on page load:
-
+```javascript
 document.addEventListener('DOMContentLoaded', function() {
     apiListTasks().then(
         function(response) {
@@ -59,3 +59,4 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     );
 });
+```
