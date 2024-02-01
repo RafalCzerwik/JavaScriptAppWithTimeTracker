@@ -13,27 +13,27 @@ const apihost = 'your_host';
 ```
 ## Functions
 1. ### apiListTasks()
-Lists all tasks.
+- Lists all tasks.
 2. ### apiListOperationsForTask(taskId)
-Lists all operations for a specific task.
+- Lists all operations for a specific task.
 3. ### apiCreateTask(title, description)
-Creates a new task.
+- Creates a new task.
 4. ### apiDeleteTask(taskId)
-Deletes a task.
+- Deletes a task.
 5. ### apiCreateOperationForTask(taskId, description)
-Creates a new operation for a specific task.
+- Creates a new operation for a specific task.
 6. ### apiUpdateOperation(operationId, description, timeSpent)
-Updates an operation.
+- Updates an operation.
 7. ### apiDeleteOperation(operationId)
-Deletes an operation.
+- Deletes an operation.
 8. ### apiUpdateTask(taskId, title, description, status)
-Updates a task.
+- Updates a task.
 9. ### renderTask(taskId, title, description, status)
-Renders HTML representation of a task.
+- Renders HTML representation of a task.
 10. ### renderOperation(operationList, status, operationId, operationDescription, timeSpent)
-Renders HTML representation of an operation.
+- Renders HTML representation of an operation.
 11. ### formatTime(timeSpent)
-Formats time in minutes to hours and minutes.
+- Formats time in minutes to hours and minutes.
 
 
 ## Usage
